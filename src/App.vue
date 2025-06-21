@@ -6,11 +6,13 @@ import HelloWorld from './components/HelloWorld.vue'
 import SisiKanan from './components/SisiKanan.vue';
 import SisiKiri from './components/SisiKiri.vue';
 
-const items = ['Item A', 'Item B', 'Item C']
+const items = ['Meal Customization', 
+                'Delivery Service', 
+                'Nutritional Information']
 const descriptions = [
-  'Deskripsi untuk A',
-  'Deskripsi untuk B',
-  'Deskripsi untuk C'
+  'Berbagai pilihan menu sehat yang dapat disesuaikan dengan kebutuhan diet Anda.',
+  'Dari Banda Aceh hingga Jayapura, kami siap mengantarkan makanan sehat ke seluruh Indonesia.',
+  'Dapatkan informasi lengkap tentang kandungan gizi setiap hidangan yang kami tawarkan.'
 ]
 
 const hoveredIndex = ref(null)
@@ -40,10 +42,14 @@ function setHovered(index) {
     </div>
     <!--Halaman 2-->
     <div class="page">
-      <!--Sisi Kiri-->
-      <div class="abc">AKSJ</div>
-      <SisiKiri :items="items" @hover-item="setHovered" />
-      <SisiKanan :text="descriptions[hoveredIndex]" />
+      <!--Bikin div di center-->
+      <p class="title2">Our Services</p>
+      <div class="centerRow">
+        <SisiKiri :items="items" @hover-item="setHovered" />
+        <SisiKanan :text="descriptions[hoveredIndex]" />
+      </div>
+      
+
     </div>
     <!--Bagian Kontak-->
     <div class="kontak">
@@ -73,6 +79,15 @@ function setHovered(index) {
 .abc{
   color: black;
   font-size: 2rem; /* text-2xl */
+}
+
+.centerRow {
+  display: flex;
+  width: 50vw;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .listKontak{
@@ -116,8 +131,19 @@ function setHovered(index) {
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 2rem; /* space-y-8 */
  
   
+}
+
+.title2{
+  font-weight: bold;
+  font-family: poppins, sans-serif;
+  font-size: 2.3rem; /* text-4xl */
+  color: #333; /* text-gray-800 */
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 

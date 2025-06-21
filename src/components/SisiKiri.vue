@@ -18,11 +18,17 @@ defineEmits(['hover-item'])
 </script>
 
 <style>
+.item {
+  color: black;
+  font-family: poppins, sans-serif;
+}
+
 .sisi-kiri {
-  width: 40%;
+  width: 60vw;
+  height: 25vh;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: aqua;
+  background-color: rgb(255, 255, 255);
 }
 </style>
