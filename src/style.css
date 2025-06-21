@@ -5,12 +5,19 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: whitesmoke;
+  background-color: rgb(255, 255, 255);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html{
+  margin: 0;
+  padding: 0;
+  
+  
 }
 
 a {
@@ -24,10 +31,15 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  padding: 0;
+  left: 0;
+  right: 0;
+  display: block;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  
 }
 
 h1 {
@@ -59,9 +71,6 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 

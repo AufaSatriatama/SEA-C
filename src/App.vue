@@ -1,5 +1,23 @@
+
+
 <script setup>
+import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import SisiKanan from './components/SisiKanan.vue';
+import SisiKiri from './components/SisiKiri.vue';
+
+const items = ['Item A', 'Item B', 'Item C']
+const descriptions = [
+  'Deskripsi untuk A',
+  'Deskripsi untuk B',
+  'Deskripsi untuk C'
+]
+
+const hoveredIndex = ref(null)
+function setHovered(index) {
+  hoveredIndex.value = index
+}
+
 </script>
 
 <template>
@@ -15,18 +33,124 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </nav>
 
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="scrollable">
+    <!--Halaman 1-->
+    <div class="page">
+      <div class="title">Healthy Meals, Anytime, Anywhere</div>
+    </div>
+    <!--Halaman 2-->
+    <div class="page">
+      <!--Sisi Kiri-->
+      <div class="abc">AKSJ</div>
+      <SisiKiri :items="items" @hover-item="setHovered" />
+      <SisiKanan :text="descriptions[hoveredIndex]" />
+    </div>
+    <!--Bagian Kontak-->
+    <div class="kontak">
+      <!--Ini untuk nama dan nomor telepon-->
+      <div class="subtitle">
+        <ul class="listKontak">
+          <li>Contact Us</li>
+          <li>Brian</li>
+          <li>081234567890</li>
+          
+        </ul>
+      </div>
+      <!--Ini untuk logo-->
+      <div></div>
+    </div>
+    
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
+
+
+  
+  <!--<HelloWorld msg="Vite + Vue" />-->
 </template>
 
 <style scoped>
+
+.abc{
+  color: black;
+  font-size: 2rem; /* text-2xl */
+}
+
+.listKontak{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space-y-4 */
+  padding: 10px;
+  margin: 0;
+}
+
+.subtitle{
+  font-size: 2xl; /* text-2xl */
+  color: #000000; /* text-gray-600 */
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.kontak{
+  background-color: wheat;
+  width: 100vw; /* w-screen */
+  height: 30vh; /* h-screen */
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.page{
+  
+  background-color: rgb(255, 255, 255);
+  width: 100vw; /* w-screen */
+
+  height: 100vh; /* h-screen */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+ 
+  
+}
+
+
+.title{
+  display: flex;
+  font-weight: bold;
+  font-family: poppins, sans-serif;
+  font-size: 3rem; /* text-4xl */
+  color: #333; /* text-gray-800 */
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.scrollable {
+  position: relative;
+
+  left: 0;
+  right: 0;
+  
+  width: 100vw; /* w-screen */
+  overflow-y: hidden;
+  overflow-x: hidden;
+      
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+      
+}
 
 
 
@@ -101,4 +225,6 @@ import HelloWorld from './components/HelloWorld.vue'
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #41ab7baa);
 }
+
+
 </style>
