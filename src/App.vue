@@ -38,7 +38,7 @@
 .active {
   
   background-color: rgb(255, 255, 255); /* text-blue-600 */
-  font-weight: bold; /* font-bold */
+  
   border-bottom: 2px solid #646cff; /* border-b-2 */
 }
 
@@ -54,10 +54,10 @@
 
 .nav-title {
   position: relative;
-  
+  display: flex;
   left: 0;
   font-size: 1.5rem; /* text-2xl */
-  gap: 1.5rem;
+  gap: 0.5rem; /* space-x-2 */
   font-weight: bold; /* font-bold */
   color: #333; /* text-gray-800 */
 }

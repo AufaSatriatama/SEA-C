@@ -7,15 +7,20 @@
     <!--Halaman 2-->
     <div class="page">
       <!--Bikin div di center-->
-      <p class="title2">Our Services</p>
+      <p class="title2">Why Us?</p>
       <div class="centerRow">
         <SisiKiri :items="items" @hover-item="setHovered" />
-        <SisiKanan :text="descriptions[hoveredIndex]" />
+        
       </div>
-
-      
-
     </div>
+
+    <!--Halaman 3 (Untuk testimoni) -->
+    <div class="page">
+      <div class="centerRow">
+        <div class="title2">Testimonials</div>
+      </div>
+    </div>
+
     <!--Bagian Kontak-->
     <div class="kontak">
       <!--Ini untuk nama dan nomor telepon-->
@@ -156,13 +161,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import HelloWorld from '../components/HelloWorld.vue'
 import SisiKanan from '../components/HomePage/SisiKanan.vue';
 import SisiKiri from '../components/HomePage/SisiKiri.vue';
 
 const items = ['Meal Customization', 
-                'Delivery Service', 
-                'Nutritional Information']
+                'Delivery to Major Cities', 
+                'Detailed Nutritional Information']
 const descriptions = [
   'Berbagai pilihan menu sehat yang dapat disesuaikan dengan kebutuhan diet Anda.',
   'Dari Banda Aceh hingga Jayapura, kami siap mengantarkan makanan sehat ke seluruh Indonesia.',
