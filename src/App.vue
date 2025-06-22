@@ -1,7 +1,9 @@
 
 
 <script setup>
+  import { useRoute } from 'vue-router';
 
+  const route = useRoute()
 </script>
 
 <template>
@@ -13,10 +15,16 @@
     <div class="nav-div">
       <div class="nav-title">SEA Catering</div>
       <ul class="nav-links">
-        <li ><router-link to="/" class="nav-subtitle">Home</router-link></li>
-        <li><router-link to="/meal-plans" class="nav-subtitle">Meal Plans</router-link></li>
-        <li><router-link to="/subscription" class="nav-subtitle">Subscription</router-link></li>
-        <li><router-link to="/contact-us" class="nav-subtitle">Contact Us</router-link></li>
+        <li v-if="route.path === '/'"><router-link to="/" class="nav-subtitle active">Home</router-link></li>
+        <li v-else><router-link to="/" class="nav-subtitle">Home</router-link></li>
+        <li v-if="route.path === '/meal-plans'"><router-link to="/meal-plans" class="nav-subtitle active">Meal Plans</router-link></li>
+        <li v-else><router-link to="/meal-plans" class="nav-subtitle">Meal Plans</router-link></li>
+        <li v-if="route.path === '/subscription'"><router-link to="/subscription" class="nav-subtitle active">Subscription</router-link></li>
+        <li v-else><router-link to="/subscription" class="nav-subtitle">Subscription</router-link></li>
+        <li v-if="route.path === '/contact-us'"><router-link to="/contact-us" class="nav-subtitle active">Contact Us</router-link></li>
+        <li v-else><router-link to="/contact-us" class="nav-subtitle">Contact Us</router-link></li>
+        <li v-if="route.path === '/dashboard'"><router-link to="/dashboard" class="nav-subtitle active">Dashboard</router-link></li>
+        <li v-else><router-link to="/dashboard" class="nav-subtitle">Dashboard</router-link></li>
       </ul>
     </div>
   </nav>
@@ -27,6 +35,12 @@
 <style scoped>
 
 
+.active {
+  
+  background-color: rgb(255, 255, 255); /* text-blue-600 */
+  font-weight: bold; /* font-bold */
+  border-bottom: 2px solid #646cff; /* border-b-2 */
+}
 
 
 

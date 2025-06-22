@@ -157,8 +157,8 @@
 <script setup>
 import { ref } from 'vue'
 import HelloWorld from '../components/HelloWorld.vue'
-import SisiKanan from '../components/SisiKanan.vue';
-import SisiKiri from '../components/SisiKiri.vue';
+import SisiKanan from '../components/HomePage/SisiKanan.vue';
+import SisiKiri from '../components/HomePage/SisiKiri.vue';
 
 const items = ['Meal Customization', 
                 'Delivery Service', 
