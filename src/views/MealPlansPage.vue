@@ -7,30 +7,82 @@
       <div class="row">
         <!---->
         <div class="mealPlanCard">
-          <img src="../assets/Menu1.jpeg" class="imgFit" alt="">
-          <p class="menuTitle">Menu 1</p>
+          <ImageCard namaMenu="Healthy Plan" :imageSrc="Menu1" />
         </div>
 
         <div class="mealPlanCard">
-          <img src="../assets/Menu2.jpeg" class="imgFit" alt="">
-          <p class="menuTitle">Menu 2</p>
+          <ImageCard namaMenu="Royal Plan" :imageSrc="Menu2" />
         </div>
 
         <div class="mealPlanCard">
-          <img src="../assets/Menu3.jpeg" class="imgFit" alt="">
-          <p class="menuTitle">Menu 3</p>
+          <ImageCard namaMenu="Protein Plan" :imageSrc="Menu3" />
         </div>
       </div>  
+
+
+    </div>
+
+    <div class="page">
+      <!-- Untuk bikin testimoni-->
+      <div class="title2">Write Your Testimonial Here!</div>
+
+      <!--Untuk Nama-->
+      <div class="">
+        <input type="text" v-model="nama" placeholder="Masukkan Nama" class="input" />
+      </div>
+
+      <!-- Pesan -->
+      <div class="">
+        <textarea v-model="pesan" placeholder="Masukkan Pesan" class="input"></textarea>
+      </div>
+
+      <!-- Bintang -->
+      <div class="">
+        <label>
+          <input type="radio" :value="1" v-model="rating" /> 1 Star
+        </label>
+        <label>
+          <input type="radio" :value="2" v-model="rating" /> 2 Stars
+        </label>
+        <label>
+          <input type="radio" :value="3" v-model="rating" /> 3 Stars
+        </label>
+        <label>
+          <input type="radio" :value="4" v-model="rating" /> 4 Stars
+        </label>
+        <label>
+          <input type="radio" :value="5" v-model="rating" /> 5 Stars
+        </label>
+      </div>
+
     </div>
 
   </div>
 </template>
 
-<script>
+<script setup>
   import { ref } from 'vue'
+  import ImageCard from '../components/MealPlansPage/ImageCard.vue';
+  import Menu1 from '../assets/Menu1.jpeg'
+  import Menu2 from '../assets/Menu2.jpeg'
+  import Menu3 from '../assets/Menu3.jpeg'
+
+  const rating = ref(null);
+
 </script>
 
 <style scoped>
+
+.title2{
+  font-weight: bold;
+  font-family: poppins, sans-serif;
+  font-size: 2.3rem; /* text-4xl */
+  color: #333; /* text-gray-800 */
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .menuTitle {
   background-color: rgba(255, 255, 255, 0.7);
@@ -41,10 +93,12 @@
 
 
 .imgFit {
+
   object-fit: cover;
   width: 100%;
   height: 90%;
   border-radius: 1rem;
+  background-color: rgb(255, 255, 255);
 }
 
 .scrollable {
@@ -98,7 +152,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* space-y-8 */
+  gap: 1rem; /* space-y-8 */
  
   
 }

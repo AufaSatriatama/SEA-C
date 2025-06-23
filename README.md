@@ -9,3 +9,6 @@ Sources of Assets:
 - Menu 1: https://id.pinterest.com/pin/30540103719598657/
 - Menu 2: https://id.pinterest.com/pin/351912461325036/
 - Menu 3: https://id.pinterest.com/pin/12736811442325735/
+
+Library Used:
+- https://github.com/ismail9k/vue3-carousel

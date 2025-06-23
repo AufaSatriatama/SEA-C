@@ -16,8 +16,12 @@
 
     <!--Halaman 3 (Untuk testimoni) -->
     <div class="page">
-      <div class="centerRow">
+      <div class="centerColumn">
         <div class="title2">Testimonials</div>
+        
+          <!--Isinya: Bintang, komen, nama pengguna -->
+        <Testimonials></Testimonials>
+       
       </div>
     </div>
 
@@ -53,6 +57,15 @@
   align-items: center;
   display: flex;
   flex-direction: row;
+}
+
+.centerColumn {
+  display: flex;
+  width: 50vw;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .listKontak{
@@ -161,8 +174,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import SisiKanan from '../components/HomePage/SisiKanan.vue';
 import SisiKiri from '../components/HomePage/SisiKiri.vue';
+import Testimonials from '../components/HomePage/Testimonials.vue';
 
 const items = ['Meal Customization', 
                 'Delivery to Major Cities', 
