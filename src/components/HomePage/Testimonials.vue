@@ -1,21 +1,93 @@
 <template>
-  <Carousel v-bind="carouselConfig">
-    <Slide v-for="(testimonial, index) in testimonials" :key="index" class="divRow">
+
+
+    
+  <Carousel v-bind="carouselConfig" class="carousel-wrapper"> 
+    <Slide v-for="(testimonial, index) in testimonials" :key="index">
         <div class="carousel__item">
-            <TestimonialCard :testimonial="testimonial" />
+            <div class="fixed-card">
+                <TestimonialCard :testimonial="testimonial"/>
+            </div>
         </div>
     </Slide>
+    
 
     <template #addons>
       <Navigation />
       <Pagination />
     </template>
   </Carousel>
+  
 </template>
 
     
 
 <style scoped>
+
+.carousel__slide {
+  background-color: #eee;
+
+}
+
+.carousel__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  background-color: white;
+}
+
+.fixed-card {
+  width: 250px;
+  height: 100%;
+  max-height: 100%;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+
+.carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 2rem 0;
+}
+
+.carousel__item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+
+.color2{
+    background-color: aqua;
+    width: 100%;
+}
+
+.color {
+  background-color: rgb(255, 255, 255); /* Light gray background for the carousel items */
+ /* Rounded corners for the items */
+ max-width: 30vw;
+ display: flex;
+ flex-direction: row;
+ gap: 10rem;
+
+}
+
 
 
 .carousel__item {
@@ -26,6 +98,7 @@
   align-items: center;
   margin: 0;
   padding: 0;
+  
 }
 
     .divRow{
@@ -52,22 +125,18 @@ const carouselConfig = {
   itemsToShow: 1,
   wrapAround: true,
   snapAlign: 'center',
-  autoplay: 3000,
+  autoplay: 0,
   pauseAutoplayOnHover: true,
   transition: 600,
   mouseDrag: false, // Disable mouse drag to prevent shaking
-  breakpoints: {
-    768: {
-      itemsToShow: 1
-    }
-  }
+
 };
 
-   const testimonials = ref([
+   const testimonials =[
        { name: 'John Doe', message: 'Great service!', rating: 5 },
-       { name: 'Jane Smith', message: 'Loved the meal plans!', rating: 4 },
-       { name: 'Alice Johnson', message: 'Very helpful team.', rating: 5 }
-   ]);
+       { name: 'John Doe', message: 'Great service!', rating: 5 },
+       { name: 'John Doe', message: 'Great service!', rating: 5 },
+   ];
 
 
 
