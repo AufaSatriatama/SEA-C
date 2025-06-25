@@ -43,7 +43,6 @@
   max-height: 100%;
   background: white;
   padding: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 12px;
   box-sizing: border-box;
   transition: transform 0.3s ease;

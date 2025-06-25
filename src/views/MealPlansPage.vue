@@ -26,34 +26,7 @@
       <!-- Untuk bikin testimoni-->
       <div class="title2">Write Your Testimonial Here!</div>
 
-      <!--Untuk Nama-->
-      <div class="">
-        <input type="text" v-model="nama" placeholder="Masukkan Nama" class="input" />
-      </div>
-
-      <!-- Pesan -->
-      <div class="">
-        <textarea v-model="pesan" placeholder="Masukkan Pesan" class="input"></textarea>
-      </div>
-
-      <!-- Bintang -->
-      <div class="">
-        <label>
-          <input type="radio" :value="1" v-model="rating" /> 1 Star
-        </label>
-        <label>
-          <input type="radio" :value="2" v-model="rating" /> 2 Stars
-        </label>
-        <label>
-          <input type="radio" :value="3" v-model="rating" /> 3 Stars
-        </label>
-        <label>
-          <input type="radio" :value="4" v-model="rating" /> 4 Stars
-        </label>
-        <label>
-          <input type="radio" :value="5" v-model="rating" /> 5 Stars
-        </label>
-      </div>
+      <FormTestimonials></FormTestimonials>
 
     </div>
 
@@ -66,8 +39,9 @@
   import Menu1 from '../assets/Menu1.jpeg'
   import Menu2 from '../assets/Menu2.jpeg'
   import Menu3 from '../assets/Menu3.jpeg'
+  import FormTestimonials from '../components/MealPlansPage/FormTestimonials.vue';
 
-  const rating = ref(null);
+
 
 </script>
 

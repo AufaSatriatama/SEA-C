@@ -11,7 +11,9 @@
   "dependencies": {
     "vue": "^3.5.13",
     "vue-router": "^4.5.1",
-    "vue3-carousel": "^0.16.0"
+    "vue-yup-form": "^1.0.8",
+    "vue3-carousel": "^0.16.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.10",
