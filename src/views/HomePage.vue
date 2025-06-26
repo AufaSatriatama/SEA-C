@@ -23,6 +23,8 @@
         <Testimonials></Testimonials>
        
       </div>
+
+      <!--Test isi dari database-->
     </div>
 
     <!--Bagian Kontak-->

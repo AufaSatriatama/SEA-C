@@ -1,22 +1,43 @@
 <template>
 
+  <!--Render manual-->
 
-    
-  <Carousel v-bind="carouselConfig" class="carousel-wrapper"> 
-    <Slide v-for="(testimonial, index) in testimonials" :key="index">
-        <div class="carousel__item">
-            <div class="fixed-card">
-                <TestimonialCard :testimonial="testimonial"/>
-            </div>
-        </div>
-    </Slide>
-    
 
-    <template #addons>
-      <Navigation />
-      <Pagination />
-    </template>
-  </Carousel>
+  <div>
+    <Carousel 
+      class="carousel-wrapper"> 
+      <!--Sementara pakai data dummy-->
+      <!--Nanti pakai testimonials.value-->
+      <Slide v-for="(testimonial, index) in testimonialsDummy" :key="index">
+          <div class="carousel__item">
+              <div class="fixed-card">
+                  <TestimonialCard :testimonial="testimonial"/>
+              </div>
+          </div>
+      </Slide>
+      
+
+      <template #addons>
+        <Navigation />
+        <Pagination />
+      </template>
+    </Carousel>
+  </div>
+
+
+
+
+
+  <!--Untuk test
+  <div>
+    <button @click="addTestimonial">Fetch Data</button>
+  </div>
+
+  <div>
+    <button @click="deleteInvalid">Hapus yang null</button>
+  </div>
+
+-->
   
 </template>
 
@@ -58,6 +79,7 @@
   margin: auto;
   background: white;
   padding: 2rem 0;
+
 }
 
 .carousel__item {
@@ -114,28 +136,112 @@
 
 <script setup>
 
+  import { ref, onMounted, onUnmounted } from 'vue'
+  import axios from 'axios'
+
+
+  const testimonialsDummy = [
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+   ];
+
+  const testimonials = ref([
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+    { name: 'John Doe', message: 'Great service!', rating: 5 },
+   ]);
+
+  const testimonialsDb = ref([]);
+
+  //Testing untuk input data ke database
+
+  const name = ref('test');
+  const message = ref('test');
+  const rating = ref(5);
+
+  const addTestimonial = async () => {
+    try {
+      const newTestimonial = {
+        name: name.value,
+        message: message.value,
+        rating: rating.value
+      }
+
+      if (!newTestimonial.name || !newTestimonial.message || newTestimonial.rating === null || newTestimonial.rating === undefined) {
+        console.error('Semua field harus diisi!')
+        return
+      }
+      await axios.post('http://localhost:8080/Testimonials', newTestimonial)
+
+
+      await fetchTestimonials() // Refresh langsung setelah submit
+      console.log('UPDATE testimonials:', testimonials.value)
+    } catch (err) {
+      console.error('Gagal kirim data ke backend:', err)
+    }
+  }
+
+  // Auto-refresh tiap 5 detik
+  let intervalId
+  onMounted(() => {
+    fetchTestimonials()
+    intervalId = setInterval(fetchTestimonials, 5000) // <-- Real-time effect
+  })
+
+  // Hentikan polling saat komponen dihancurkan
+  onUnmounted(() => {
+    clearInterval(intervalId)
+  })
+
+// Ambil data dari backend saat pertama kali halaman dibuka
+  const fetchTestimonials = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/Testimonials')
+      console.log('DATA DARI BACKEND:', res.data)
+      testimonials.value = res.data.map(t => ({
+        name: t.name,
+        message: t.message,
+        rating: t.rating
+      }))
+    } catch (err) {
+      console.error('Gagal ambil data dari database:', err)
+    }
+  }
+
+ 
+
+
     import 'vue3-carousel/carousel.css'
     import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
-    import { reactive, ref } from 'vue';
+    import { reactive} from 'vue';
     import TestimonialCard from './TestimonialCard.vue';
 
-const carouselConfig = {
-  itemsToShow: 1,
-  wrapAround: true,
-  snapAlign: 'center',
-  autoplay: 0,
-  pauseAutoplayOnHover: true,
-  transition: 600,
-  mouseDrag: false, // Disable mouse drag to prevent shaking
 
-};
+  const carouselConfig = {
+    itemsToShow: 1,
+    wrapAround: false, //sebelumnya true
+    snapAlign: 'center',
+    autoplay: 0,
+    pauseAutoplayOnHover: true,
+    transition: 600,
+    mouseDrag: false, // Disable mouse drag to prevent shaking
 
-   const testimonials =[
-       { name: 'John Doe', message: 'Great service!', rating: 5 },
-       { name: 'John Doe', message: 'Great service!', rating: 5 },
-       { name: 'John Doe', message: 'Great service!', rating: 5 },
-   ];
+  };
+
+  const deleteInvalid = async () => {
+  try {
+    await axios.delete('http://localhost:8080/Testimonials/delete-invalid')
+    await fetchTestimonials()
+    console.log('Data null dihapus')
+  } catch (err) {
+    console.error('Gagal hapus data null:', err)
+  }
+}
+
+
+
 
 
 
