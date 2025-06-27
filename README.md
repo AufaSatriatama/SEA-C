@@ -29,8 +29,6 @@ Library Used:
 - https://github.com/ismail9k/vue3-carousel (Carousel)
 - https://github.com/mascii/vue-yup-form (Yup)
 
-Menyambungkan Database
-- Di Springboot-SEA-C/src/main/resources/application.properties, masukkan username, password dan database pilihan Anda.
 
 
 ## Instalasi
@@ -45,7 +43,7 @@ Menyambungkan Database
     ```sh
     mysql -u root -p
     [Masukkan password MySQL Anda]
-    CREATE DATABASE [Nama database Anda]
+    CREATE DATABASE [Nama database Anda];
     ```
 
 3. Change Spring Boot configuration
