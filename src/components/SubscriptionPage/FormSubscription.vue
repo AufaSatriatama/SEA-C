@@ -119,7 +119,7 @@ color: black;
 
 <script setup>
 import { computed, ref } from 'vue';
-
+import axios from 'axios';
 import { reactive } from 'vue'
 import * as yup from 'yup'
 
@@ -182,6 +182,21 @@ async function validateForm() {
   try {
     await schema.validate(form, { abortEarly: false })
     alert('Data valid!')
+
+    try{
+        const response = await axios.post('http://localhost:8080/Subscription', {
+            name: form.name,
+            phoneNumber: form.number,
+            planSelection: form.opsiJenis,
+            mealType: form.opsiMakan,
+            deliveryDays: form.deliveryDay,
+            pesan : form.alergi
+        }, {withCredentials: true});
+        console.log('Subscription successful:', response.data);
+    } catch (error) {
+        console.error('Error submitting subscription:', error);
+    }
+
   } catch (err) {
     // Reset error
     errors.name = ''
