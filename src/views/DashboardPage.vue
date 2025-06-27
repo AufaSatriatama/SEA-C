@@ -2,7 +2,7 @@
     <div class="page">
 
         <div v-if="isLogin == true">
-            <div>Sudah Login</div>
+            <div class="logged-in-message">Sudah Login</div>
         </div>
 
         <div v-else>
@@ -22,10 +22,18 @@
 <script setup>
     import { ref } from 'vue';
 
-    let isLogin = ref(false);
+    import { isLogin } from '../globalVariable';
+
+   
 </script>
 
 <style scoped>
+
+.logged-in-message {
+    color: green;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 
 .centerRow {
     display: flex;

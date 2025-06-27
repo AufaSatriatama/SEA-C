@@ -27,6 +27,7 @@
 
   <div>
     <button @click="deleteLast">Delete Last Element</button>
+    <button @click="addTestimonial">Add Testi</button>
   </div>
 
 
@@ -163,6 +164,8 @@
   const message = ref('test');
   const rating = ref(5);
 
+  let jumlahTestimonial = ref(1);
+
 
 
   const addTestimonial = async () => {
@@ -177,7 +180,7 @@
         console.error('Semua field harus diisi!')
         return
       }
-      await axios.post('http://localhost:8080/Testimonials', newTestimonial)
+      await axios.post('http://localhost:8080/Testimonials', newTestimonial, {withCredentials: true});
 
 
       await fetchTestimonials() // Refresh langsung setelah submit
@@ -206,11 +209,20 @@
       console.log('DATA DARI BACKEND:', res.data)
 
       // Kosongkan array lalu isi ulang
-      testimonials.splice(0, testimonials.length, ...res.data.map(t => ({
-        name: t.name,
-        message: t.message,
-        rating: t.rating
-      })))
+
+      if (jumlahTestimonial.value != res.data.length) {
+        console.log('length asli:', testimonials.length)
+        console.log('length baru:', res.data.length)
+        testimonials.value = [] // Kosongkan array testimonials
+
+        
+          testimonials.push(res.data[res.data.length - 1])
+        
+
+      }
+
+      jumlahTestimonial.value = res.data.length
+
     } catch (err) {
       console.error('Gagal ambil data dari database:', err)
     }
