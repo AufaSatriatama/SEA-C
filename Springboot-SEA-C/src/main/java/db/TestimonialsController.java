@@ -48,6 +48,19 @@ public class TestimonialsController {
             }
         }
     }
+
+    //Hapus data terakhir 
+    @DeleteMapping("/delete-last")
+    public void deleteLastTestimonial() throws Exception{
+        try {
+            List<Testimonials> all = repo.findAll();
+            Testimonials lastTestimonial = all.get(all.size()-1);
+            repo.delete(lastTestimonial);  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 
 

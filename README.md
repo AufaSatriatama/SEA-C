@@ -7,12 +7,15 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 Deployment link:
 https://sea-c.vercel.app/
 
-Make sure:
-- 've installed SQL
-- 've installed maven
+Make sure that you've installed:
+- Java
+- Maven
+- MySQL
+- Git
+- Npm
+- Vite + Vue
 
 Menyambungkan Database
-- Pastikan MySQL sudah terinstall
 - Di Springboot-SEA-C/src/main/resources/application.properties, masukkan username, password dan database pilihan Anda.
 
 

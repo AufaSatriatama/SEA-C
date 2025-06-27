@@ -8,7 +8,8 @@
       class="carousel-wrapper"> 
       <!--Sementara pakai data dummy-->
       <!--Nanti pakai testimonials.value-->
-      <Slide v-for="(testimonial, index) in testimonialsDummy" :key="index">
+      <!--Perhatikan yang testimonialsDummy gak pakai ref()-->
+      <Slide v-for="(testimonial, index) in testimonials" :key="index">
           <div class="carousel__item">
               <div class="fixed-card">
                   <TestimonialCard :testimonial="testimonial"/>
@@ -22,6 +23,10 @@
         <Pagination />
       </template>
     </Carousel>
+  </div>
+
+  <div>
+    <button @click="deleteLast">Delete Last Element</button>
   </div>
 
 
@@ -146,11 +151,9 @@
     { name: 'John Doe', message: 'Great service!', rating: 5 },
    ];
 
-  const testimonials = ref([
+  const testimonials = [
     { name: 'John Doe', message: 'Great service!', rating: 5 },
-    { name: 'John Doe', message: 'Great service!', rating: 5 },
-    { name: 'John Doe', message: 'Great service!', rating: 5 },
-   ]);
+   ];
 
   const testimonialsDb = ref([]);
 
@@ -159,6 +162,8 @@
   const name = ref('test');
   const message = ref('test');
   const rating = ref(5);
+
+
 
   const addTestimonial = async () => {
     try {
@@ -199,11 +204,13 @@
     try {
       const res = await axios.get('http://localhost:8080/Testimonials')
       console.log('DATA DARI BACKEND:', res.data)
-      testimonials.value = res.data.map(t => ({
+
+      // Kosongkan array lalu isi ulang
+      testimonials.splice(0, testimonials.length, ...res.data.map(t => ({
         name: t.name,
         message: t.message,
         rating: t.rating
-      }))
+      })))
     } catch (err) {
       console.error('Gagal ambil data dari database:', err)
     }
@@ -239,6 +246,16 @@
     console.error('Gagal hapus data null:', err)
   }
 }
+
+  const deleteLast = async () => {
+    try {
+      await axios.delete('http://localhost:8080/Testimonials/delete-last')
+      await fetchTestimonials()
+      console.log('Data terakhir dihapus')
+    } catch (err) {
+      console.error('Gagal hapus data terakhir:', err)
+    }
+  }
 
 
 

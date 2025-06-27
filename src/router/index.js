@@ -4,13 +4,17 @@ import MealPlansPage from '../views/MealPlansPage.vue'
 import SubscriptionPage from '../views/SubscriptionPage.vue'
 import ContactPage from '../views/ContactPage.vue'
 import DashboardPage from '../views/DashboardPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
 
 const routes = [
   { path: '/', component: HomePage },
   { path: '/meal-plans', component: MealPlansPage },
   { path: '/subscription', component: SubscriptionPage },
   { path: '/contact', component: ContactPage },
-  { path: '/dashboard', component: DashboardPage }
+  { path: '/dashboard', component: DashboardPage },
+  { path: '/loginPage', component: LoginPage },
+  { path: '/registerPage', component: RegisterPage },
 ]
 
 const router = createRouter({
