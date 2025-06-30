@@ -3,6 +3,7 @@
   <!--Render manual-->
 
 
+
   <div>
     <Carousel 
       class="carousel-wrapper"> 
@@ -163,8 +164,20 @@
   const name = ref('test');
   const message = ref('test');
   const rating = ref(5);
+  import { indexDb } from '../../globalVariable.js'; // <-- Import indexDb from globalVariable.js
 
   let jumlahTestimonial = ref(1);
+
+  const takeTestimonials = async () => {
+    try{
+      const res = await axios.get('http://localhost:8080/Testimonials')
+      for (let i = 0; i < res.data.length; i++) {
+        testimonialsDb.value.push(res.data[i])
+      }
+    }catch (err) {
+      console.error('Gagal mengambil data dari database:', err)
+    }
+  }
 
 
 
@@ -190,9 +203,11 @@
     }
   }
 
+
   // Auto-refresh tiap 5 detik
   let intervalId
   onMounted(() => {
+    onMountedTestimonials()
     fetchTestimonials()
     intervalId = setInterval(fetchTestimonials, 5000) // <-- Real-time effect
   })
@@ -202,11 +217,15 @@
     clearInterval(intervalId)
   })
 
-// Ambil data dari backend saat pertama kali halaman dibuka
-  const fetchTestimonials = async () => {
+  const onMountedTestimonials = async () => {
     try {
       const res = await axios.get('http://localhost:8080/Testimonials')
       console.log('DATA DARI BACKEND:', res.data)
+      if (indexDb.value == 0){
+        //Digunakan untuk ambil testimoni
+        indexDb.value = res.data.length - 1
+      }
+       
 
       // Kosongkan array lalu isi ulang
 
@@ -216,7 +235,49 @@
         testimonials.value = [] // Kosongkan array testimonials
 
         
-          testimonials.push(res.data[res.data.length - 1])
+        //testimonials.push(res.data[res.data.length - 1])
+        console.log('indexDb.value:', indexDb.value)
+        console.log('res.data.length:', res.data.length)
+        for (let i = indexDb.value; i < res.data.length; i++) {
+          testimonials.push(res.data[i]) // Isi ulang dengan data dari backend
+        }
+        
+
+      }
+
+      jumlahTestimonial.value = res.data.length
+    } catch (error) {
+      console.error('Gagal ambil data dari database:', err)
+    }
+  }
+
+// Ambil data testimoni terakhir
+  const fetchTestimonials = async () => {
+  
+
+    try {
+      const res = await axios.get('http://localhost:8080/Testimonials')
+      console.log('DATA DARI BACKEND:', res.data)
+      if (indexDb.value == 0){
+        //Digunakan untuk ambil testimoni
+        indexDb.value = res.data.length - 1
+      }
+       
+
+      // Kosongkan array lalu isi ulang
+
+      if (jumlahTestimonial.value != res.data.length) {
+        console.log('length asli:', testimonials.length)
+        console.log('length baru:', res.data.length)
+        //testimonials.value = [] // Kosongkan array testimonials
+
+        
+        testimonials.push(res.data[res.data.length - 1])
+        console.log('indexDb.value:', indexDb.value)
+        console.log('res.data.length:', res.data.length)
+        for (let i = indexDb.value; i < res.data.length; i++) {
+          //testimonials.push(res.data[i]) // Isi ulang dengan data dari backend
+        }
         
 
       }
@@ -240,6 +301,7 @@
 
   const carouselConfig = {
     itemsToShow: 1,
+
     wrapAround: false, //sebelumnya true
     snapAlign: 'center',
     autoplay: 0,

@@ -67,6 +67,11 @@ const handleSubmit = async () => {
       rating: rating.value
     }, {withCredentials: true});
     console.log('Testimonial submitted:', response.data);
+
+    //Clear the form
+    nama.value = '';
+    pesan.value = '';
+    rating.value = null;
   } catch (error) {
     console.error('Error submitting testimonial:', error);
   }

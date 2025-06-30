@@ -76,7 +76,7 @@
 
         </div>
 
-        <textarea v-model="alergi" placeholder="Daftar alergi Anda"></textarea>
+        <textarea v-model="alergi" name="alergi" placeholder="Daftar alergi Anda"></textarea>
 
         <button type="submit">Submit</button>
     </form>
@@ -127,6 +127,7 @@ import * as yup from 'yup'
 const opsiJenis = ref(null);
 const opsiMakan = ref([]);
 const deliveryDay = ref([]);
+const alergi = ref('');
 
 let totalHarga = ref(0);
 
@@ -158,7 +159,7 @@ totalHarga = computed(() => {
 
 const form = reactive({
   name: '',
-  password: '',
+  number: '',
 })
 
 const errors = reactive({
@@ -169,8 +170,6 @@ const errors = reactive({
 const schema = yup.object({
   name: yup.string()
     .required('Nama wajib diisi'),
-  password: yup.string()
-    .required('Password wajib diisi'),
   number: yup.string()
     .required('Nomor wajib diisi')
     .length(10, 'Nomor harus 10 digit'),
@@ -178,22 +177,40 @@ const schema = yup.object({
 
 })
 
-async function validateForm() {
+const validateForm = async () => {
   try {
     await schema.validate(form, { abortEarly: false })
     alert('Data valid!')
 
     try{
-        const response = await axios.post('http://localhost:8080/Subscription', {
+        const response = await axios.post('http://localhost:8080/Subscriptions', {
             name: form.name,
             phoneNumber: form.number,
-            planSelection: form.opsiJenis,
-            mealType: form.opsiMakan,
-            deliveryDays: form.deliveryDay,
-            pesan : form.alergi
+            planSelection: opsiJenis.value,
+            mealType: opsiMakan.value,
+            deliveryDays: deliveryDay.value,
+            pesan : alergi.value
+
+
+
         }, {withCredentials: true});
         console.log('Subscription successful:', response.data);
+
+            //clear form
+            form.name = '';
+            form.number = '';
+            opsiJenis.value = null;
+            opsiMakan.value = [];
+            deliveryDay.value = [];
+            alergi.value = '';
+
     } catch (error) {
+        console.error('name', form.name);
+        console.error('number', form.number);
+        console.error('opsiJenis', opsiJenis.value);
+        console.error('opsiMakan', opsiMakan.value);
+        console.error('deliveryDay', deliveryDay.value);
+        console.error('alergi', form.alergi);
         console.error('Error submitting subscription:', error);
     }
 
@@ -201,6 +218,7 @@ async function validateForm() {
     // Reset error
     errors.name = ''
     errors.password = ''
+    console.log("errors", err);
 
     err.inner.forEach(e => {
       errors[e.path] = e.message

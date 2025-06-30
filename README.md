@@ -46,6 +46,8 @@ Library Used:
     CREATE DATABASE [Nama database Anda];
     ```
 
+3. Create and edit .env file at /Springboot-SEA-C
+
 3. Change Spring Boot configuration
 
     - Masuk ke SEA-Compfest\Springboot-SEA-C\src\main\resources

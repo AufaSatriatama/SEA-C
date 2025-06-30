@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE}, allowCredentials = "true")
 
 @RestController
 @RequestMapping("/Subscriptions")
@@ -28,7 +28,7 @@ public class SubscriptionsController {
 
     @PostMapping
     public Subscriptions addSubscriptions(@RequestBody Subscriptions subscriptions) {
-        if (subscriptions.getName().isEmpty() || subscriptions.getPesan().isEmpty() || subscriptions.getPhoneNumber() <= 0 || subscriptions.getPlanSelection() <= 0 || subscriptions.getMealType() == null || subscriptions.getDeliveryDays() == null) {
+        if (subscriptions.getName().isEmpty() || subscriptions.getPhoneNumber() <= 0 || subscriptions.getPlanSelection() <= 0 || subscriptions.getMealType() == null || subscriptions.getDeliveryDays() == null) {
             throw new IllegalArgumentException();
         }
         return repo.save(subscriptions);
