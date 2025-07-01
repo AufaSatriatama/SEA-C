@@ -26,10 +26,13 @@
     </Carousel>
   </div>
 
+  <!--
   <div>
     <button @click="deleteLast">Delete Last Element</button>
     <button @click="addTestimonial">Add Testi</button>
   </div>
+  -->
+
 
 
 

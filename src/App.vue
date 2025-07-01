@@ -2,6 +2,8 @@
 
 <script setup>
   import { useRoute } from 'vue-router';
+  import { currentUser, isLogin } from './globalVariable';
+
 
   const route = useRoute()
 </script>
@@ -23,7 +25,10 @@
         <li v-else><router-link to="/subscription" class="nav-subtitle">Subscription</router-link></li>
         <li v-if="route.path === '/contact-us'"><router-link to="/contact-us" class="nav-subtitle active">Contact Us</router-link></li>
         <li v-else><router-link to="/contact-us" class="nav-subtitle">Contact Us</router-link></li>
-        <li v-if="route.path === '/dashboard'"><router-link to="/dashboard" class="nav-subtitle active">Dashboard</router-link></li>
+        <li v-if="route.path === '/dashboardAdmin' && currentUser.role === 'admin'"><router-link to="/dashboardAdmin" class="nav-subtitle active">Dashboard</router-link></li>
+        <li v-else-if="route.path === '/dashboard' && currentUser.role === 'user'"><router-link to="/dashboard" class="nav-subtitle active">Dashboard</router-link></li>
+        <li v-else-if="route.path !== '/dashboardAdmin' && currentUser.role === 'admin'"><router-link to="/dashboardAdmin" class="nav-subtitle">Dashboard</router-link></li>
+        <li v-else-if="route.path !== '/dashboard' && currentUser.role === 'user'"><router-link to="/dashboard" class="nav-subtitle">Dashboard</router-link></li>
         <li v-else><router-link to="/dashboard" class="nav-subtitle">Dashboard</router-link></li>
       </ul>
     </div>

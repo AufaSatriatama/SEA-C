@@ -29,6 +29,10 @@ Library Used:
 - https://github.com/ismail9k/vue3-carousel (Carousel)
 - https://github.com/mascii/vue-yup-form (Yup)
 
+## Email dan Password Admin
+- admin@example.com
+- admin123
+
 
 
 ## Instalasi
@@ -48,10 +52,6 @@ Library Used:
 
 3. Create and edit .env file at /Springboot-SEA-C
 
-3. Change Spring Boot configuration
-
-    - Masuk ke SEA-Compfest\Springboot-SEA-C\src\main\resources
-    - Ubah konfigurasi di application.properties sesuai username, password, dan database MySQL Anda
 
 4. Run Backend
     ```sh

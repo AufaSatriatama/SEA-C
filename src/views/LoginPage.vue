@@ -15,23 +15,38 @@
 
     import { computed, ref } from 'vue';
     import axios from 'axios';
-    import { isLogin } from '../globalVariable';
+    import { currentUser, isLogin } from '../globalVariable';
     import { useRouter } from 'vue-router';
 
     const router = useRouter();
 
     const userRepository = ref([]);
 
+    let dehashedPassword = "";
+
+
+    function hash(password, offset = 5) {
+    let result = "";
+    for (let i = 0; i < password.length; i++) {
+        const charCode = password.charCodeAt(i);
+        result += String.fromCharCode(charCode + offset);
+    }
+    return result;
+    }
+
     const getUserRepository = async () => {
         try {
             const response = await axios.get('http://localhost:8080/User');
             userRepository.value = []
             response.data.forEach(user => {
+                
                 if (user.email && user.password) { // Ensure email and password exist
                     userRepository.value.push({
                         username: user.username,
                         email: user.email,
-                        password: user.password
+                        password: user.password,
+                        role: user.role
+                    
                     });
                 }
             });
@@ -46,21 +61,43 @@
 
     const handleSubmit = async () => {
         for (let i = 0; i < userRepository.value.length; i++){
-            const currentUser = userRepository.value[i];
+            const thisUser = userRepository.value[i];
 
-            if (currentUser.email == email.value && currentUser.password == password.value){
+            let hashedPassword = hash(password.value);
+
+            if (thisUser.email == email.value && hashedPassword == thisUser.password){
                 isLogin.value = true;
-                console.log('Login successful:', currentUser);
-                router.push('/dashboard'); 
-            }else{
+                console.log('Login successful:', thisUser);
+
+                //Salin value ke currentUser
+                currentUser.value = { ...thisUser };
+
+                if (thisUser.role == "admin"){
+                    router.push('/dashboardAdmin');
+                }else{
+                    router.push('/dashboard');
+                }
+
+                break;
+
+                 
+            }else if (i == userRepository.value.length - 1) {
                 isLogin.value = false;
-                fetchData();
-                console.log('Login failed: Invalid email or password');
-              
-                console.log('Current username:', currentUser.username);
-                console.log('Current password:', currentUser.password);
-                console.log('Current email:', email.value);
-                console.log('Current password:', password.value);
+                
+
+                if (email.value === '' || password.value === '') {
+                    alert('Email and password cannot be empty');
+                } else if (currentUser.email !== email.value) {
+                    alert('Email not found');
+                } else if (hashedPassword !== currentUser.password) {
+                    alert('Incorrect password');
+                    console.log('Password submitted:', password.value);
+                    console.log('Hashed password:', hashedPassword);
+                    console.log('Password in repository:', currentUser.password);
+                }else {
+                    alert('Login failed: Error tidak diketahui');
+                }
+               
             }
         }
     }

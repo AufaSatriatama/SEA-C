@@ -1,15 +1,25 @@
 <template class="centerColumn">
 
     <form @submit.prevent="validateForm">
-        <div>
-            <input id="name" v-model="form.name" type="text" placeholder="Nama"/>
-            <span v-if="errors.name">{{ errors.name }}</span>            
+
+        <div v-if="isLogin == false">
+            <div>
+                <input id="name" v-model="form.name" type="text" placeholder="Nama"/>
+                <span v-if="errors.name">{{ errors.name }}</span>            
+            </div>
+
+        </div>
+
+        <div v-else>
+
         </div>
 
         <div>
             <input id="number" v-model="form.number" type="number" placeholder="Nomor"/>
             <span v-if="errors.number">{{ errors.number }}</span>
         </div>
+
+
 
         <div>Plan Selection</div>
         
@@ -118,6 +128,7 @@ color: black;
 </style>
 
 <script setup>
+import { isLogin, currentUser } from '../../globalVariable';
 import { computed, ref } from 'vue';
 import axios from 'axios';
 import { reactive } from 'vue'
@@ -162,29 +173,52 @@ const form = reactive({
   number: '',
 })
 
+let schema = null;
+
 const errors = reactive({
   name: '',
   password: '',
 })
 
-const schema = yup.object({
-  name: yup.string()
-    .required('Nama wajib diisi'),
-  number: yup.string()
-    .required('Nomor wajib diisi')
-    .length(10, 'Nomor harus 10 digit'),
-    
+if (isLogin.value === true){
+    schema = yup.object({
+        number: yup.string()
+            .required('Nomor wajib diisi')
+            .length(10, 'Nomor harus 10 digit'),
+            
+    })
+}else{
+    schema = yup.object({
+    name: yup.string()
+        .required('Nama wajib diisi'),
+    number: yup.string()
+        .required('Nomor wajib diisi')
+        .length(10, 'Nomor harus 10 digit'),
+        
 
-})
+    })
+}
+
+
 
 const validateForm = async () => {
+console.log('currentUser', currentUser.value);
   try {
     await schema.validate(form, { abortEarly: false })
-    alert('Data valid!')
+    //alert('Data valid!')
+    let namaKeDatabase = "";
+
+    if (isLogin.value === false) {
+        // Jika belum login, tampilkan pesan
+        namaKeDatabase = form.name;
+    }else{
+        namaKeDatabase = currentUser.value.username;
+    }
+    
 
     try{
         const response = await axios.post('http://localhost:8080/Subscriptions', {
-            name: form.name,
+            name: namaKeDatabase,
             phoneNumber: form.number,
             planSelection: opsiJenis.value,
             mealType: opsiMakan.value,
@@ -197,7 +231,9 @@ const validateForm = async () => {
         console.log('Subscription successful:', response.data);
 
             //clear form
-            form.name = '';
+            if (isLogin.value === false) {
+                form.name = '';
+            }
             form.number = '';
             opsiJenis.value = null;
             opsiMakan.value = [];
@@ -205,7 +241,7 @@ const validateForm = async () => {
             alergi.value = '';
 
     } catch (error) {
-        console.error('name', form.name);
+        
         console.error('number', form.number);
         console.error('opsiJenis', opsiJenis.value);
         console.error('opsiMakan', opsiMakan.value);
@@ -216,13 +252,10 @@ const validateForm = async () => {
 
   } catch (err) {
     // Reset error
-    errors.name = ''
+    
     errors.password = ''
     console.log("errors", err);
 
-    err.inner.forEach(e => {
-      errors[e.path] = e.message
-    })
   }
 }
 

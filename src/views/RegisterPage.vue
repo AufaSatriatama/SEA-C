@@ -18,12 +18,58 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { isLogin } from '../globalVariable';
+import { onMounted } from 'vue';
 
 
 const username = ref('');
 const email = ref('');
 const password = ref('');
+let passwordHashed = "";
+let role = "";
 
+function checkPasswordRequirement(password){
+    //Apakah minimal 8 karakter
+    if (password.length < 8) {
+        alert('Password must be at least 8 characters long');
+        return false;
+    }
+
+    //Apakah ada huruf besar
+    if (!/[A-Z]/.test(password)) {
+        alert('Password must contain at least one uppercase letter');
+        return false;
+    }
+
+    //Apakah ada huruf kecil
+    if (!/[a-z]/.test(password)) {
+        alert('Password must contain at least one lowercase letter');
+        return false;
+    }
+
+    //Apakah ada angka
+    if (!/\d/.test(password)) {
+        alert('Password must contain at least one number');
+        return false;
+    }
+
+    //Apakah ada karakter spesial
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        alert('Password must contain at least one special character');
+        return false;
+    }
+
+    return true;
+}
+
+//Hash password dengan cipher
+function hash(password, offset = 5) {
+  
+  for (let i = 0; i < password.length; i++) {
+    const charCode = password.charCodeAt(i);
+    passwordHashed += String.fromCharCode(charCode + offset);
+  }
+  return passwordHashed;
+}
 
 
 
@@ -31,11 +77,16 @@ const handleSubmit = async () => {
     // Handle form submission
     console.log('Form submitted:', { username, email, password });
 
+    if (checkPasswordRequirement(password.value) == false) {
+        return; // Stop submission if password is invalid
+    }
+
     try{
         const newUser = {
             username: username.value,
             email: email.value,
-            password: password.value
+            password: hash(password.value),
+            role: "buyer"
         };
         await axios.post('http://localhost:8080/User', newUser);
 
